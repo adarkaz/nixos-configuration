@@ -26,6 +26,7 @@
     description = "${username}";
     extraGroups = [
       "networkmanager"
+      "input"
       "wheel"
     ];
     shell = pkgs.zsh;

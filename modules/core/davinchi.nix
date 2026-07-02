@@ -2,10 +2,12 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
-  environment.systemPackages = with pkgs; [
-    davinci-resolve
+  environment.systemPackages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; with pkgs; [
+    junie
+    shotcut
   ];
 }

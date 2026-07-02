@@ -3,7 +3,6 @@
   # imports = [ inputs.nix-gaming.nixosModules.default ];
   nix = {
     settings = {
-      trusted-users = [ "swd" ];
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"

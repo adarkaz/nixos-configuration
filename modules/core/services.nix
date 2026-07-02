@@ -29,5 +29,5 @@
     udisks2.enable = true;
   };
 
-  time.timeZone = "Europe/Moscow";
+  time.timeZone = "Asia/Yekaterinburg";
 }

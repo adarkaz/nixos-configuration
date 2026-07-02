@@ -40,6 +40,8 @@
 
     #grub theme
     grubshin-bootpact.url = "github:max-ishere/grubshin-bootpact";
+
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs =

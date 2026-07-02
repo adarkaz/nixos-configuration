@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    # openclaw
     ## Lsp
     nixd # nix
     nil
