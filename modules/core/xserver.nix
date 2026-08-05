@@ -7,7 +7,7 @@
 
       xkb = {
         layout = "us,ru";
-        options = "grp:alt_caps_toggle";
+        options = "grp:caps_toggle";
       };
     };
 
