@@ -1,6 +1,6 @@
 { pkgs, host, ... }:
 {
-  programs.amnezia-vpn.enable = true;   
+  # programs.amnezia-vpn.enable = true;   
   networking = {
     nftables.enable = true;
     hostName = "${host}";

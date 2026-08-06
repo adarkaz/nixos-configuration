@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 let
   launcher = pkgs.callPackage ./launcher.nix { };
 in

@@ -36,8 +36,8 @@
       PLATFORM_PROFILE_ON_AC = "performance";
       PLATFORM_PROFILE_ON_BAT = "performance";
 
-      INTEL_GPU_MIN_FREQ_ON_AC = 500;
-      INTEL_GPU_MIN_FREQ_ON_BAT = 500;
+      # INTEL_GPU_MIN_FREQ_ON_AC = 500;
+      # INTEL_GPU_MIN_FREQ_ON_BAT = 500;
       # INTEL_GPU_MAX_FREQ_ON_AC=0;
       # INTEL_GPU_MAX_FREQ_ON_BAT=0;
       # INTEL_GPU_BOOST_FREQ_ON_AC=0;
@@ -60,4 +60,13 @@
       ]
       ++ [ pkgs.cpupower-gui ];
   };
+
+	hardware.nvidia.prime = {
+		# Make sure to use the correct Bus ID values for your system!
+		# intelBusId = "PCI:0:2:0";
+		nvidiaBusId = "PCI:1:00.0";
+		amdgpuBusId = "PCI:36:00.0";
+  };
 }
+
+

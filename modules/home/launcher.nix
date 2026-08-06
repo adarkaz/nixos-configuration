@@ -1,84 +1,55 @@
-{ lib
-, stdenv
-, fetchurl
-, autoPatchelfHook
-, makeWrapper
-, alsa-lib
-, at-spi2-atk
-, at-spi2-core
-, atk
-, cairo
-, cups
-, dbus
-, expat
-, fontconfig
-, freetype
-, gdk-pixbuf
-, glib
-, gtk3
-, libdrm
-, libGL
-, libnotify
-, libpulseaudio
-, libuuid
-, libxkbcommon
-, mesa
-, nspr
-, nss
-, pango
-, systemd
-, xorg
-, zlib
-}:
+{ lib, appimageTools, fetchzip, writeShellScript }:
 
-stdenv.mkDerivation rec {
+let
   pname = "rpmrp-launcher";
-  version = "0.0.0"; # unknown upstream version - update if the launcher reports one
+  version = "2.7.0";
 
-  src = fetchurl {
+  # The download is a zip wrapping the actual AppImage. `extension` is
+  # needed because the URL itself carries no file extension for fetchzip
+  # to guess the archive type from.
+  src = fetchzip {
     url = "https://files-en.rpmserver.com/download?os=linux";
-    # The URL has no filename/extension, so Nix needs a hint to unpack it
-    # correctly. Change this if step 1 in README.md shows it's actually
-    # an AppImage, .deb, or .zip instead of a tarball.
-    name = "rpmrp-launcher.tar.gz";
-    sha256 = lib.fakeSha256; # placeholder - see README.md step 2
+    extension = "zip";
+    # the zip has the AppImage, a Windows .exe, and a readme all sitting
+    # flat at the top level - no single folder to descend into
+    stripRoot = false;
+    sha256 = "sha256-JCg7xcNuLFGXeTafbJ2NTsZ0YKZYCLvtnTA27SEtaLw="; # <-- put YOUR already-working hash back here, don't leave this placeholder
   };
 
-  nativeBuildInputs = [ autoPatchelfHook makeWrapper ];
+  # Assumes the AppImage sits at the top level of the zip. If `nix build`
+  # can't find it here, run `unzip -l RPMRolePlay-installer.zip` and adjust
+  # this path to match the real layout (e.g. "${src}/linux/RPM-RolePlay-...").
+  appimage = "${src}/RPM-RolePlay-${version}.AppImage";
 
-  # Best-guess set of runtime libs for an Electron/CEF-style launcher.
-  # autoPatchelfHook will tell you at build time if anything is still
-  # missing - add the reported package and rebuild.
-  buildInputs = [
-    alsa-lib at-spi2-atk at-spi2-core atk cairo cups dbus expat
-    fontconfig freetype gdk-pixbuf glib gtk3 libdrm libGL libnotify
-    libpulseaudio libuuid libxkbcommon mesa nspr nss pango
-    systemd zlib
-  ] ++ (with xorg; [
-    libX11 libXcomposite libXdamage libXext libXfixes libXrandr
-    libxcb libxshmfence libXtst libXScrnSaver
-  ]);
+  appimageContents = appimageTools.extractType2 { inherit pname version; src = appimage; };
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out/opt/rpmrp-launcher $out/bin
-    cp -r . $out/opt/rpmrp-launcher
-
-    # TODO: replace with the real executable name - see README.md step 3
-    binName="RPMRP-Launcher"
-
-    makeWrapper "$out/opt/rpmrp-launcher/$binName" "$out/bin/rpmrp-launcher" \
-      --chdir "$out/opt/rpmrp-launcher"
-
-    runHook postInstall
+  # The launcher writes logs (and probably downloads extra engine/anti-cheat
+  # files) inside its own resources directory, which normally lives in the
+  # read-only Nix store. Copy the extracted app into a writable per-user
+  # cache dir once, then run from there instead - this mirrors what a
+  # normal AppImage does when it self-extracts to /tmp on a machine without
+  # FUSE, which is presumably how this launcher is meant to run.
+  run = writeShellScript "${pname}-run" ''
+    workdir="$HOME/.cache/${pname}/${version}"
+    if [ ! -e "$workdir/.complete" ]; then
+      rm -rf "$workdir"
+      mkdir -p "$workdir"
+      cp -r ${appimageContents}/. "$workdir"/
+      chmod -R u+w "$workdir"
+      touch "$workdir/.complete"
+    fi
+    exec "$workdir/AppRun" "$@"
   '';
+in
+appimageTools.wrapType2 {
+  inherit pname version;
+  src = appimage;
 
-  # Note: no desktop entry here anymore - the Home Manager module
-  # (hm-module.nix) declares it via xdg.desktopEntries instead, since
-  # that's the idiomatic place for it in a Home Manager setup. If you use
-  # this package outside Home Manager, see the commented block at the
-  # bottom of hm-module.nix for the equivalent plain nixpkgs version.
+  # Add packages here if the launcher complains about a missing .so at
+  # runtime - AppImages usually bundle most of what they need already.
+  extraPkgs = pkgs: with pkgs; [ ];
+
+  runScript = "${run}";
 
   meta = with lib; {
     description = "Launcher for the RPM RolePlay GTA San Andreas Multiplayer (SA-MP) server";
