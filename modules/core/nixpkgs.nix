@@ -11,7 +11,6 @@
         })
       )
       inputs.nur.overlays.default
-      inputs.millennium.overlays.default
     ];
   };
 }

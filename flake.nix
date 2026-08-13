@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
@@ -31,12 +30,7 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake/beta";
     # steam interface
-    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     #nixvim.url = "github:dc-tec/nixvim";
-
-    #genshin
-    #aagl.url = "github:ezKEa/aagl-gtk-on-nix";
-    aagl.url = "github:adarkaz/aagl-gtk-on-nix";
 
     #grub theme
     grubshin-bootpact.url = "github:max-ishere/grubshin-bootpact";
@@ -48,7 +42,6 @@
     {
       nixpkgs,
       self,
-      aagl,
       ...
     }@inputs:
     let
@@ -79,7 +72,6 @@
               self
               inputs
               username
-              aagl
               ;
           };
         };

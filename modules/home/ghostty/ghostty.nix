@@ -20,7 +20,7 @@
       ##### Theme #####
       theme = "gruvbox";
       background-opacity = 0.5;
-      adjust-cursor-thickness = 1;
+      # adjust-cursor-thickness = 1;
 
       selection-clear-on-copy = true;
       mouse-hide-while-typing = true;

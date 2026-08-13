@@ -39,11 +39,20 @@ in
       name = icon-theme-name;
       package = pkgs.papirus-icon-theme.override { color = "green"; };
     };
-    cursorTheme = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
-      size = 48;
-    };
+    
+    #
+    # cursorTheme = {
+    #   name = "Rice Shower";
+    #   package = pkgs.manhattan-cafe-cursor;
+    #   size = 48;
+    # };
+    #
+    #
+    # cursorTheme = {
+    #   name = "Bibata-Modern-Ice";
+    #   package = pkgs.bibata-cursors;
+    #   size = 24;
+    # };
 
     gtk3 = {
       extraConfig = {
@@ -70,9 +79,21 @@ in
     };
   };
 
-  home.pointerCursor = {
-    name = "Bibata-Modern-Ice";
-    package = pkgs.bibata-cursors;
-    size = 48;
-  };
+  # home.pointerCursor.enable = true;
+
+  #
+  # home.pointerCursor = {
+  #   gtk.enable = true;
+  #   x11.enable = true;
+  #
+  #   name = "Rice Shower";
+  #   package = pkgs.manhattan-cafe-cursor;
+  #   size = 48;
+  # };
+  #
+  # home.pointerCursor = {
+  #   name = "Bibata-Modern-Ice";
+  #   package = pkgs.bibata-cursors;
+  #   size = 24;
+  # };
 }

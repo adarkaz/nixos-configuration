@@ -15,6 +15,7 @@
     ## Office
     libreoffice
     gnome-calculator
+    gnome-calendar
 
     ## Utility
     dconf-editor

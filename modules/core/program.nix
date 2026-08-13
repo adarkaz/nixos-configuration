@@ -1,7 +1,5 @@
 { pkgs, ... }:
 {
-  services.ollama.enable = true;
-  virtualisation.waydroid.enable = true;
   programs = {
     throne.enable = true;
 

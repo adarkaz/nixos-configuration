@@ -10,7 +10,6 @@
     vtsls
     typescript
 
-    gemini-cli-bin
     claude-code
 
     ## formating
@@ -42,7 +41,6 @@
     python3Packages.python-lsp-server
     python3Packages.python-lsp-jsonrpc
     python3Packages.python-lsp-black
-    python3Packages.python-lsp-ruff
     python3Packages.pyls-isort
     python3Packages.pyls-flake8
     python3Packages.flake8
@@ -62,9 +60,6 @@
     ruff
     linux-wifi-hotspot
     cool-retro-term
-
-    arduino
-    arduino-cli
 
     omnisharp-roslyn # Language Server (LSP)
     netcoredbg # Debugger (DAP)

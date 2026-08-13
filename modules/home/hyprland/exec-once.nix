@@ -21,7 +21,7 @@
 
     "swaync &"
     "udiskie --automount --notify --smart-tray &"
-    "hyprctl setcursor Bibata-Modern-Ice 48 &"
+    "hyprctl setcursor Manhattan-Cafe 48 &"
     "init-wallpaper &"
 
     #tray icon support

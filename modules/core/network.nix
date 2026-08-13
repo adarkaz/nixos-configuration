@@ -12,7 +12,6 @@
       "1.1.1.1"
     ];
     firewall = {
-      #trustedInterfaces = [ "waydroid0" ];
       enable = true;
       allowedTCPPorts = [
         22
