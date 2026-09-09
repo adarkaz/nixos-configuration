@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 {
-  programs.ssh.askPassword = lib.mkForce "${pkgs.ksshaskpass}/bin/ksshaskpass";
+  # programs.ssh.askPassword = lib.mkForce "${pkgs.ksshaskpass}/bin/ksshaskpass";
 
   services = {
     asusd.enable = true;
@@ -20,7 +20,7 @@
 
     # needed for GNOME services outside of GNOME Desktop
     dbus.packages = with pkgs; [
-      gcr
+      gcr_4
       gnome-settings-daemon
     ];
 
@@ -35,5 +35,5 @@
     udisks2.enable = true;
   };
 
-  time.timeZone = "Asia/Yekaterinburg";
+  time.timeZone = "Europe/Moscow";
 }

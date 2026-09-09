@@ -2,7 +2,7 @@
 {
   services = {
     xserver = {
-      videoDrivers = [ "amdgpu" "nvidia" ];
+      videoDrivers = [ "nvidia" ];
       enable = true;
 
       xkb = {

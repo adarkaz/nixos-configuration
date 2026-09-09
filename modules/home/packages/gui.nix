@@ -14,6 +14,11 @@
 
     ## Office
     libreoffice
+
+    ## spell checking for libreoffice
+    hunspell
+    hunspellDicts.ru-ru
+
     gnome-calculator
     gnome-control-center
     gnome-calendar
