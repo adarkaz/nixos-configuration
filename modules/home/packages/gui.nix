@@ -15,6 +15,7 @@
     ## Office
     libreoffice
     gnome-calculator
+    gnome-control-center
     gnome-calendar
 
     ## Utility

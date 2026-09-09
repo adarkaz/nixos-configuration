@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  services.displayManager.gdm.enable = true;
+
+  # services.desktopManager.plasma6.enable = true;
+  services.desktopManager.gnome.enable = true;
+
   programs.hyprland = {
     enable = true;
   };

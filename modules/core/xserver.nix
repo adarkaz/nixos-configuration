@@ -2,7 +2,7 @@
 {
   services = {
     xserver = {
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "amdgpu" "nvidia" ];
       enable = true;
 
       xkb = {
@@ -11,10 +11,11 @@
       };
     };
 
-    displayManager.autoLogin = {
-      enable = true;
-      user = "${username}";
-    };
+    # displayManager.autoLogin = {
+    #   enable = true;
+    #   user = "${username}";
+    # };
+
     libinput = {
       enable = true;
     };

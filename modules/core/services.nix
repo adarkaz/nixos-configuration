@@ -1,10 +1,16 @@
 { pkgs, lib, ... }:
 {
+  programs.ssh.askPassword = lib.mkForce "${pkgs.ksshaskpass}/bin/ksshaskpass";
+
   services = {
     asusd.enable = true;
     gvfs.enable = true;
 
     gnome = {
+      #gnome calendar
+      evolution-data-server.enable = true; 
+      gnome-online-accounts.enable = true;
+
       tinysparql.enable = true;
       gnome-keyring.enable = true;
     };

@@ -1,6 +1,7 @@
 { pkgs, host, ... }:
 {
-  # programs.amnezia-vpn.enable = true;   
+  programs.amnezia-vpn.enable = true;   
+
   networking = {
     nftables.enable = true;
     hostName = "${host}";
@@ -12,7 +13,8 @@
       "1.1.1.1"
     ];
     firewall = {
-      enable = true;
+      # enable = true;
+      enable = false;
       allowedTCPPorts = [
         22
         80

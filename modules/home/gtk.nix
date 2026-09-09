@@ -11,6 +11,14 @@ let
     ];
   };
   icon-theme-name = "Papirus-Dark";
+
+  # was pkgs.manhattan-cafe-cursor, which isn't a real nixpkgs package --
+  # that's why the theme "set" (name/size were written to dconf/env) but
+  # nothing actually scaled: there was no working package behind it, and
+  # more importantly no hyprcursor output for Hyprland itself to use.
+  rice-shower-cursor = pkgs.callPackage ./../../pkgs/rice-shower-cursor { };
+  cursor-name = "rice-shower"; # no spaces -- matches the dir under share/icons
+  cursor-size = 48;
 in
 {
   fonts.fontconfig.enable = true;
@@ -24,7 +32,6 @@ in
     fantasque-sans-mono
     maple-mono-custom
   ];
-
   gtk = {
     enable = true;
     font = {
@@ -39,27 +46,23 @@ in
       name = icon-theme-name;
       package = pkgs.papirus-icon-theme.override { color = "green"; };
     };
-    
-    #
-    # cursorTheme = {
-    #   name = "Rice Shower";
-    #   package = pkgs.manhattan-cafe-cursor;
-    #   size = 48;
-    # };
-    #
+
+    cursorTheme = {
+      name = cursor-name;
+      package = rice-shower-cursor;
+      size = cursor-size;
+    };
     #
     # cursorTheme = {
     #   name = "Bibata-Modern-Ice";
     #   package = pkgs.bibata-cursors;
     #   size = 24;
     # };
-
     gtk3 = {
       extraConfig = {
         gtk-application-prefer-dark-theme = lib.mkForce true;
       };
     };
-
     gtk4 = {
       theme = {
         name = gtk-theme-name;
@@ -70,27 +73,32 @@ in
       };
     };
   };
-
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       gtk-theme = gtk-theme-name;
       icon-theme = icon-theme-name;
       color-scheme = "prefer-dark";
+      cursor-theme = cursor-name;
+      cursor-size = cursor-size;
     };
   };
 
-  # home.pointerCursor.enable = true;
+  home.pointerCursor = {
+    enable = true;
+    gtk.enable = true;
+    x11.enable = true;
+    name = cursor-name;
+    package = rice-shower-cursor;
+    size = cursor-size;
 
-  #
-  # home.pointerCursor = {
-  #   gtk.enable = true;
-  #   x11.enable = true;
-  #
-  #   name = "Rice Shower";
-  #   package = pkgs.manhattan-cafe-cursor;
-  #   size = 48;
-  # };
-  #
+    # This is the piece that was missing: without it, Hyprland (and any
+    # server-side-cursor app -- Qt, foot, kitty) never gets HYPRCURSOR_THEME/
+    # HYPRCURSOR_SIZE and falls back to a non-scaled XCursor bitmap.
+    hyprcursor = {
+      enable = true;
+      size = cursor-size;
+    };
+  };
   # home.pointerCursor = {
   #   name = "Bibata-Modern-Ice";
   #   package = pkgs.bibata-cursors;
